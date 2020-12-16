@@ -4,12 +4,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
-const MONGODB_URI = process.env.DB_URL;
 const logger = require('morgan');
 const cors = require("cors");
 require("dotenv").config();
-
-
+const MONGODB_URI = process.env.DB_URL;
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
