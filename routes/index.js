@@ -34,8 +34,24 @@ let protectedRoute = (req, res, next) => {
 /* GET home page */
 router.get("/profile", protectedRoute, (req, res) => {
     Product.find({ author: req.user._id })
+        .populate("author")
         .then((products) => {
             res.json(products)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+});
+
+router.post("/profile", protectedRoute, (req, res) => {
+
+    console.log(req.body)
+    Product.create({
+        ...req.body,
+        author: req.user.id
+    })
+        .then((products) => {
+            res.json({ products })
         })
         .catch(err => {
             console.log(err)
@@ -52,6 +68,10 @@ router.get("/friends", protectedRoute, (req, res) => {
             console.log(err)
         )
 });
+
+
+
+
 
 
 

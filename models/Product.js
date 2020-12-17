@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
     productName: String,
     link: String,
-    price: Number,
+    price: String,
     image: String,
     notes: String,
-    author: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    author: { type: Schema.Types.ObjectId, ref: "User" },
 })
 
 

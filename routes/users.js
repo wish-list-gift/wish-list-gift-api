@@ -7,9 +7,11 @@ const bcrypt = require("bcrypt");
 
 
 // /auth/signup
-app.post("/register", (req, res) => {
-    const emailExists = User.findOne({ email: req.body.email })
+app.post("/register", async (req, res) => {
+
+    const emailExists = await User.findOne({ email: req.body.email })
     if (emailExists) {
+
         return res.status(400).send({ message: "User already exists" })
     }
     bcrypt.hash(req.body.password, 10, function (err, hash) {
@@ -49,6 +51,12 @@ app.post("/login", (req, res) => {
                 res.status(403).send("Invalid credentials");
             }
         });
+});
+
+app.get("/getAllUsers", (req, res) => {
+    User.find({}, { _id: 1, email: 1, firstName: 1, lastName: 1 }).then((allUsers) => {
+        res.json(allUsers);
+    });
 });
 
 module.exports = app;
