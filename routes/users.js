@@ -54,10 +54,13 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/getAllUsers", (req, res) => {
-    User.find({}, { _id: 1, email: 1, firstName: 1, lastName: 1 }).then((allUsers) => {
-        res.json(allUsers);
-    });
+    User.find({}, { _id: 1, email: 1, firstName: 1, lastName: 1 })
+        .then((allUsers) => {
+            res.json(allUsers);
+        });
 });
+
+
 
 module.exports = app;
 

@@ -58,6 +58,16 @@ router.post("/profile", protectedRoute, (req, res) => {
         })
 });
 
+router.get("/user-profile", protectedRoute, (req, res) => {
+    User.find(req.user._id)
+        .then((user) => {
+            res.json(user)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+});
+
 router.get("/friends", protectedRoute, (req, res) => {
     User.findById(req.user.id)
         .populate("friends")
