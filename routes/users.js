@@ -5,6 +5,31 @@ const User = require("../models/User");
 var jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+let protectedRoute = (req, res, next) => {
+    if (!req.headers.authorization)
+        return res.status(403).send("Unauthenticated", "Line 9");
+    let token = req.headers.authorization.split(" ")[1];
+
+    if (!token) return res.status(403).send("Unauthenticated");
+    try {
+        var decoded = jwt.verify(token, "shhhhh");
+    } catch (err) {
+        return res.status(403).send("Unauthenticated");
+    }
+
+    if (!decoded) res.status(403).send("Unauthenticated");
+
+    User.findById(decoded.id).then((user) => {
+        if (!user) res.status(403).send("Unauthenticated");
+        else {
+            req.user = user
+            next();
+        }
+    })
+        .catch((err) => {
+            console.log(err)
+        })
+}
 
 // /auth/signup
 app.post("/register", async (req, res) => {

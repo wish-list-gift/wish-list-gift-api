@@ -43,6 +43,26 @@ router.get("/profile", protectedRoute, (req, res) => {
         })
 });
 
+router.get("/profile/:id", protectedRoute, (req, res) => {
+    Product.findById(req.params.id)
+        .then((products) => {
+            res.json(products)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+});
+
+router.delete("/profile/:id"), protectedRoute, (req, res) => {
+    Product.findByIdAndDelete(req.params.id, req.body)
+        .then((deleteProduct) => {
+            res.send("deleted")
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
 router.post("/profile", protectedRoute, (req, res) => {
 
     console.log(req.body)
